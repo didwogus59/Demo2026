@@ -7,13 +7,14 @@ import org.springframework.stereotype.Repository;
 import com.example.demo.architecture.domain.User;
 import com.example.demo.architecture.domain.UserRepository;
 
-import lombok.RequiredArgsConstructor;
-
 @Repository
-@RequiredArgsConstructor
 public class MongoUserRepositoryAdapter implements UserRepository {
 
     private final UserMongoRepository mongoRepository;
+
+    public MongoUserRepositoryAdapter(UserMongoRepository mongoRepository) {
+        this.mongoRepository = mongoRepository;
+    }
 
     @Override
     public Optional<User> findById(Long id) {
@@ -22,12 +23,8 @@ public class MongoUserRepositoryAdapter implements UserRepository {
 
     @Override
     public User save(User user) {
-
         UserDocument document = toDocument(user);
-
-        UserDocument saved =
-                mongoRepository.save(document);
-
+        UserDocument saved = mongoRepository.save(document);
         return toDomain(saved);
     }
 
@@ -38,13 +35,10 @@ public class MongoUserRepositoryAdapter implements UserRepository {
         );
     }
 
-    private UserDocument toDocument(
-            User user
-    ) {
-        UserDocument document =
-                new UserDocument();
+    private UserDocument toDocument(User user) {
+        UserDocument document = new UserDocument();
 
-        if(user.getId() != null) {
+        if (user.getId() != null) {
             document.setId(user.getId());
         }
 

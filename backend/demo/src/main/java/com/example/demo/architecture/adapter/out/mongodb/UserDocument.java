@@ -3,9 +3,6 @@ package com.example.demo.architecture.adapter.out.mongodb;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import lombok.Data;
-
-@Data
 @Document(collection = "users")
 public class UserDocument {
 
@@ -14,4 +11,22 @@ public class UserDocument {
 
     private String name;
 
+    public UserDocument() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }
